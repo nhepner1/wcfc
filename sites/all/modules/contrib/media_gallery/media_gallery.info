@@ -16,9 +16,9 @@ files[] = media_gallery.theme.inc
 
 configure = admin/config/media/galleries
 
-; Information added by drupal.org packaging script on 2012-12-06
+; Information added by drupal.org packaging script on 2012-12-13
 version = "7.x-2.x-dev"
 core = "7.x"
 project = "media_gallery"
-datestamp = "1354756692"
+datestamp = "1355361290"
 

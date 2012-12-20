@@ -578,7 +578,7 @@ function media_form_file_entity_add_upload_alter(&$form, &$form_state) {
 
     // If the list of allowed extensions is the default provided by file_entity
     // then change the default to the more permissive media extension list.
-    if (isset($validators['file_validate_extensions']) && $validators['file_validate_extensions'] == array(variable_get('file_entity_default_allowed_extensions', 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp'))) {
+    if (isset($validators['file_validate_extensions']) && $validators['file_validate_extensions'] == array(FILE_ENTITY_DEFAULT_ALLOWED_EXTENSIONS)) {
       $validators['file_validate_extensions'] = array(media_variable_get('file_extensions'));
     }
   }

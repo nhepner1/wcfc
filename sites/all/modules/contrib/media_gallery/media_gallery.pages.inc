@@ -370,12 +370,13 @@ function media_gallery_media_page_edit($gallery, $file) {
     l($gallery->title, $node_url_arguments['path'], $node_url_arguments['options']),
   ));
 
-  // We'll be reusing Media module's 'media_edit' form, so we need to load its
-  // include file. In addition to loading it here, we also set the include file
-  // info within $form_state in case there are AJAX enabled widgets that will
-  // submit to system/ajax, bypassing this menu callback.
-  module_load_include('inc', 'media', 'includes/media.pages');
-  $form_state['build_info']['files']['menu'] = array('type' => 'inc', 'module' => 'media', 'name' => 'media.pages');
+  // We'll be reusing File entity (fieldable files) module's 'file_entity_edit'
+  // form, so we need to load its include file. In addition to loading it here,
+  // we also set the include file info within $form_state in case there are
+  // AJAX enabled widgets that will submit to system/ajax, bypassing this menu
+  // callback.
+  module_load_include('inc', 'file_entity', 'file_entity.pages');
+  $form_state['build_info']['files']['menu'] = array('type' => 'inc', 'module' => 'file_entity', 'name' => 'file_entity.pages');
 
   // Provide context information for form building and processing functions.
   $form_state['media_gallery']['gallery'] = $gallery;
@@ -383,7 +384,7 @@ function media_gallery_media_page_edit($gallery, $file) {
   // Since we have a $form_state, we can't call drupal_get_form(), so pass the
   // expected arguments to drupal_build_form().
   $form_state['build_info']['args'] = array($file);
-  return drupal_build_form('media_edit', $form_state);
+  return drupal_build_form('file_entity_edit', $form_state);
 }
 
 /**
@@ -409,9 +410,9 @@ function media_gallery_media_page_multiedit($node) {
   module_load_include('inc', 'media', 'includes/media.pages');
 
   // Build and process the form.
-  $form = media_page_multiedit($files);
+  $form = media_file_page_edit_multiple($files);
 
-  // Override the page title set by media_page_multiedit() and return the form.
+  // Override the page title set by media_file_page_edit_multiple() and return the form.
   drupal_set_title(t('<em>Edit media for</em> @title', array('@type' => $node->type, '@title' => $node->title)), PASS_THROUGH);
   return $form;
 }

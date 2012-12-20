@@ -5,8 +5,5 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 
-# Stupid crap that Mac adds in
-.DS_Store
-
-# stupid crap that eclipse adds in
 .project
+*.DS_Store
