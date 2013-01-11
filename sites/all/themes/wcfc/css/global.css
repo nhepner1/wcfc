@@ -6,7 +6,29 @@ body {
 	background-image: -webkit-linear-gradient(top, #002D62, #3F6188);
 }
 
-#section-header {
+#zone-user-wrapper {
+  height: 25px;
+}
+
+#zone-user-wrapper .block-user {
+  float: right;
+}
+
+#zone-user-wrapper .block-user a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.logo-img {
+  margin-bottom: -50px;
+  margin-top: -25px;
+  margin-left: 30px;
+  float: left;
+  position: relative;
+  z-index: 10;
+}
+
+#zone-branding-wrapper {
 	background-color: red;
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 }
@@ -15,3 +37,5 @@ body {
 	background-color: red;
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 }
+
+
