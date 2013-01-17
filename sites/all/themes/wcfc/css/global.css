@@ -11,7 +11,42 @@ body {
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 }
 
+/* Styles the footer menus */
 #section-footer {
 	background-color: red;
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
+	font-family: tahoma;
+	font-size: 0.9em;
+	margin-bottom: 3em;
+	color: #ffffff;
+}
+
+#section-footer a:link, #section-footer a:hover, #section-footer a:visited, #section-footer a:active {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+#section-footer ul li{
+	list-style: none;
+}
+
+/* Horizontally stacks the footer Navigation and footer Social Networking menus */
+#block-block-1 {
+	float: left;
+	width: 20em;
+	margin-top: 12em;
+	text-align: center;
+}
+
+#block-menu-menu-footer-menu {
+	float: left;
+	margin-top: 5em;
+	margin-left: 15em;
+	margin-bottom: 5em;
+}
+
+#block-menu-menu-footer-social-networking-me {
+	float: left;
+	margin-top: 5em;
+	margin-left: 8em;
 }
