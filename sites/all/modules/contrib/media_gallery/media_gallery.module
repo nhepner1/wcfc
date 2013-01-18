@@ -129,8 +129,8 @@ function media_gallery_menu() {
     'title' => 'Download',
     'page callback' => 'media_download',
     'page arguments'  => array(1),
-    'access callback' => 'media_access',
-    'access arguments' => array('view'),
+    'access callback' => 'file_entity_access',
+    'access arguments' => array('view', 1),
     'type' => MENU_CALLBACK,
     'file' => 'media.pages.inc',
   );
@@ -342,8 +342,8 @@ function media_gallery_view($node, $view_mode) {
   // time building the render structure for items that won't be shown.
   if ($view_mode == 'teaser') {
     if (!empty($node->media_gallery_file[LANGUAGE_NONE])) {
-      if (media_access('view')) {
-        $first_item = array_shift($node->media_gallery_file[LANGUAGE_NONE]);
+      $first_item = array_shift($node->media_gallery_file[LANGUAGE_NONE]);
+      if (file_entity_access('view', (object)$first_item)) {
         $node->media_gallery_file[LANGUAGE_NONE] = array($first_item);
       }
       else {
@@ -354,8 +354,8 @@ function media_gallery_view($node, $view_mode) {
   // For the full display, implement pagination.
   elseif ($view_mode == 'full' || $view_mode == 'media_gallery_block') {
     $full = $view_mode == 'full' ? TRUE : FALSE;
-    if (!empty($node->media_gallery_file) && media_access('view')) {
-      $media = $node->media_gallery_file[LANGUAGE_NONE];
+    if (!empty($node->media_gallery_file)) {
+      $media = media_gallery_filter_media_access($node->media_gallery_file[LANGUAGE_NONE], 'view');
     }
     else {
       $media = array();
@@ -622,72 +622,75 @@ function media_gallery_block_view($delta = '') {
     // display a block.
     $block['subject'] = NULL;
     $block['content'] = '';
+    return $block;
   }
-  elseif (empty($node->media_gallery_file_original) || !media_access('view')) {
+
+  // Collect an array of file IDs associated with this gallery. For
+  // simplicity we will assume (here and below) that this is not a
+  // multilingual field. Also note that the node may have been loaded and
+  // viewed elsewhere on the page, in which case the 'media_gallery_file'
+  // field was modified and does not contain what we want, so we have to go
+  // back to the original field value set in hook_node_load() instead, and
+  // also clone the node before changing it so our modifications do not
+  // affect other places where it might be being viewed.
+  $node = clone $node;
+  $node->media_gallery_file = $node->media_gallery_file_original;
+  $files = &$node->media_gallery_file[LANGUAGE_NONE];
+  $files = media_gallery_filter_media_access($files, 'view');
+  if (empty($files)) {
     // Bail out now if there won't be any media items to show.
     $block['subject'] = check_plain($node->title);
     $block['content'] = t('No content available.');
+    return $block;
   }
-  else {
-    // Collect an array of file IDs associated with this gallery. For
-    // simplicity we will assume (here and below) that this is not a
-    // multilingual field. Also note that the node may have been loaded and
-    // viewed elsewhere on the page, in which case the 'media_gallery_file'
-    // field was modified and does not contain what we want, so we have to go
-    // back to the original field value set in hook_node_load() instead, and
-    // also clone the node before changing it so our modifications do not
-    // affect other places where it might be being viewed.
-    $node = clone $node;
-    $node->media_gallery_file = $node->media_gallery_file_original;
-    $files = &$node->media_gallery_file[LANGUAGE_NONE];
-    $gallery_fids = array();
-    foreach ($files as $file) {
-      $gallery_fids[] = _media_gallery_get_media_fid($file);
-    }
-    // Construct a list of file IDs that is limited to the specified number of
-    // items and ordered by most recent; these are the files that will be
-    // displayed in the block.
-    $columns = !empty($node->media_gallery_block_columns[LANGUAGE_NONE][0]['value']) ? $node->media_gallery_block_columns[LANGUAGE_NONE][0]['value'] : 1;
-    $rows = !empty($node->media_gallery_block_rows[LANGUAGE_NONE][0]['value']) ? $node->media_gallery_block_rows[LANGUAGE_NONE][0]['value'] : 1;
-    $number_to_show = $columns * $rows;
-    $block_fids = db_select('file_managed', 'f')
-      ->fields('f', array('fid'))
-      ->condition('fid', $gallery_fids, 'IN')
-      ->orderBy('timestamp', 'DESC')
-      ->range(0, $number_to_show)
-      ->execute()
-      ->fetchCol();
-    // Before sorting, remove any items that will not display in the block.
-    $fid_order = array_flip($block_fids);
-    if ($number_to_show < count($files)) {
-      foreach ($files as $key => $file) {
-        if (!isset($fid_order[_media_gallery_get_media_fid($file)])) {
-          unset($files[$key]);
-        }
+
+  $gallery_fids = array();
+  foreach ($files as $file) {
+    $gallery_fids[] = _media_gallery_get_media_fid($file);
+  }
+  // Construct a list of file IDs that is limited to the specified number of
+  // items and ordered by most recent; these are the files that will be
+  // displayed in the block.
+  $columns = !empty($node->media_gallery_block_columns[LANGUAGE_NONE][0]['value']) ? $node->media_gallery_block_columns[LANGUAGE_NONE][0]['value'] : 1;
+  $rows = !empty($node->media_gallery_block_rows[LANGUAGE_NONE][0]['value']) ? $node->media_gallery_block_rows[LANGUAGE_NONE][0]['value'] : 1;
+  $number_to_show = $columns * $rows;
+  $block_fids = db_select('file_managed', 'f')
+    ->fields('f', array('fid'))
+    ->condition('fid', $gallery_fids, 'IN')
+    ->orderBy('timestamp', 'DESC')
+    ->range(0, $number_to_show)
+    ->execute()
+    ->fetchCol();
+  // Before sorting, remove any items that will not display in the block.
+  $fid_order = array_flip($block_fids);
+  if ($number_to_show < count($files)) {
+    foreach ($files as $key => $file) {
+      if (!isset($fid_order[_media_gallery_get_media_fid($file)])) {
+        unset($files[$key]);
       }
     }
-    // Prepare the sorting function with the list of file ID orders.
-    _media_gallery_sort_by_recent(NULL, NULL, $fid_order);
-    // Perform the sort.
-    usort($files, '_media_gallery_sort_by_recent');
-    // Display the block.
-    $block['subject'] = check_plain($node->title);
-    $block['content']['gallery'] = node_view($node, 'media_gallery_block');
-    // Move the node's contextual links so that they display on the block
-    // rather than the node (i.e., in the same dropdown as the "Configure
-    // block" link). This is also required in order to properly integrate with
-    // the code in media_gallery_contextual_links_view_alter().
-    if (isset($block['content']['gallery']['#contextual_links'])) {
-      $block['content']['#contextual_links'] = $block['content']['gallery']['#contextual_links'];
-      unset($block['content']['gallery']['#contextual_links']);
-    }
-    $block['content']['more_link'] = array(
-      '#theme' => 'more_link',
-      '#url' => 'node/' . $node->nid,
-      '#title' => t('Show the complete gallery'),
-      '#weight' => 1000,
-    );
   }
+  // Prepare the sorting function with the list of file ID orders.
+  _media_gallery_sort_by_recent(NULL, NULL, $fid_order);
+  // Perform the sort.
+  usort($files, '_media_gallery_sort_by_recent');
+  // Display the block.
+  $block['subject'] = check_plain($node->title);
+  $block['content']['gallery'] = node_view($node, 'media_gallery_block');
+  // Move the node's contextual links so that they display on the block
+  // rather than the node (i.e., in the same dropdown as the "Configure
+  // block" link). This is also required in order to properly integrate with
+  // the code in media_gallery_contextual_links_view_alter().
+  if (isset($block['content']['gallery']['#contextual_links'])) {
+    $block['content']['#contextual_links'] = $block['content']['gallery']['#contextual_links'];
+    unset($block['content']['gallery']['#contextual_links']);
+  }
+  $block['content']['more_link'] = array(
+    '#theme' => 'more_link',
+    '#url' => 'node/' . $node->nid,
+    '#title' => t('Show the complete gallery'),
+    '#weight' => 1000,
+  );
 
   return $block;
 }
@@ -1488,11 +1491,16 @@ function media_gallery_edit_access($node) {
  * galleries.
  */
 function media_gallery_multiedit_access($node) {
-  if (media_gallery_edit_access($node) && media_access('edit')) {
-    $media_items = field_get_items('node', $node, 'media_gallery_file');
-    if ($media_items !== FALSE && count($media_items) > 0) {
-      return TRUE;
-    }
+  if (!media_gallery_edit_access($node) )
+    return;
+
+  $media_items = field_get_items('node', $node, 'media_gallery_file');
+  if ($media_items === FALSE)
+    return;
+
+  $media_items = media_gallery_filter_media_access($media_items, 'edit');
+  if (count($media_items) > 0) {
+    return TRUE;
   }
 }
 
@@ -1509,7 +1517,7 @@ function media_gallery_multiedit_access($node) {
  */
 function media_gallery_view_item_access($node, $file) {
   // Only grant access if the user can view the gallery and the provided media.
-  return media_gallery_view_access($node) && media_access('view')
+  return media_gallery_view_access($node) && file_entity_access('view', $file)
     && in_array($file->fid, media_gallery_get_file_ids($node));
 }
 
@@ -1519,7 +1527,7 @@ function media_gallery_view_item_access($node, $file) {
  * @param $node
  *   The gallery node object.
  * @param $file
- *   The file to view.
+ *   The file to edit.
  *
  * @return
  *   TRUE if access is granted; FALSE otherwise.
@@ -1527,7 +1535,7 @@ function media_gallery_view_item_access($node, $file) {
 function media_gallery_edit_item_access($node, $file) {
   // Only grant access if the user can edit the provided media
   // and the media is part of the gallery.
-  return media_access('edit')
+  return file_entity_access('edit', $file)
     && in_array($file->fid, media_gallery_get_file_ids($node));
 }
 
@@ -1849,4 +1857,26 @@ function media_gallery_lightbox_delivery_callback($page_content) {
     module_load_include('inc', 'media_gallery', 'media_gallery.pages');
   }
   media_gallery_lightbox_page_deliver($page_content);
+}
+
+/**
+ * Returns all given media_files, on which the user has the right
+ * of the given operation.
+ *
+ * @param $media_files
+ *   The files to perform the access check.
+ * @param $operation
+ *   A access operation (for example: 'view', 'edit',...).
+ *
+ * @return
+ *   An array of files.
+ */
+function media_gallery_filter_media_access($media_files, $operation) {
+  $media_accessable = array();
+  foreach ($media_files as $key => $media) {
+    if (file_entity_access($operation, (object)$media)) {
+      $media_accessable[] = $media;
+    }
+  }
+  return $media_accessable;
 }
