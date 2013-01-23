@@ -72,7 +72,26 @@ body {
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 }
 
+/********************************/
+/* Styles the main page content */
+/********************************/
+#zone-content {
+  background-color: #FFFFFF;
+}
+
+.flexslider {
+  border: none;
+  margin-bottom: 0;
+}
+
+.block-views-frontpage-media-slideshow-block {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+/***************************/
 /* Styles the footer menus */
+/***************************/
 #section-footer {
 	background-color: red;
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
