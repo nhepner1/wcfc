@@ -69,12 +69,15 @@ body {
 
 /* Styles the footer menus */
 #section-footer {
+/*	display: inline-block;*/
 	background-color: red;
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 	font-family: tahoma;
 	font-size: 0.9em;
 	margin-bottom: 3em;
-	color: #ffffff;
+	color: #FFFFFF;
+	padding-top: 1em;
+	padding-bottom: 6em;
 }
 
 #section-footer a:link, #section-footer a:hover, #section-footer a:visited, #section-footer a:active {
@@ -87,23 +90,16 @@ body {
 }
 
 /* Horizontally stacks the footer Navigation and footer Social Networking menus */
-#block-block-1 {
+#region-footer-first {
 	float: left;
-	width: 20em;
-	margin-top: 12em;
 	text-align: center;
 }
-
-#block-menu-menu-footer-menu {
+#region-footer-second {
 	float: left;
-	margin-top: 5em;
-	margin-left: 15em;
-	margin-bottom: 5em;
 }
-
-#block-menu-menu-footer-social-networking-me {
+#region-footer-third {
 	float: left;
-	margin-top: 5em;
-	margin-left: 8em;
 }
-
+#region-footer-fourth {
+	float: left;
+}
