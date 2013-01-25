@@ -6,6 +6,7 @@ body {
 	background-image: -webkit-linear-gradient(top, #002D62, #3F6188);
 }
 
+
 #zone-user-wrapper {
   height: 25px;
 }
@@ -31,6 +32,40 @@ body {
 #zone-branding-wrapper {
 	background-color: red;
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
+}
+
+
+.block-user {
+	margin: 0;
+	position: absolute;
+	right: 0;
+	z-index: 15;
+}	
+
+.block-user .block-inner {
+	color: #FFF;
+	padding: 0;
+}
+
+.block-user .content {
+	padding: 3px 7px;
+}
+
+#toboggan-container .toboggan-container {
+	text-align: right;
+}
+
+#toboggan-login-link {
+  display: block;
+  padding: 0 22px 0 0;
+  text-align: right;
+}
+
+#toboggan-login {
+  padding: 5px 10px 10px;
+  background-color: #002D62;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 #section-footer {
