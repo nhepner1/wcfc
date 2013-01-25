@@ -16,6 +16,8 @@ body {
 /********************************/
 #zone-content {
   background-color: #FFFFFF;
+  border-left: 6px solid #e21836;
+  border-right: 6px solid #e21836;
 }
 
 .flexslider {
