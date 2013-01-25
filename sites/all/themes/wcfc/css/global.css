@@ -34,6 +34,7 @@ body {
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 }
 
+<<<<<<< HEAD
 .block-user {
 	margin: 0;
 	position: absolute;
@@ -72,6 +73,8 @@ body {
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 }
 
+=======
+>>>>>>> ff1bc8c14e44b42502ed751067e76e6082187520
 /********************************/
 /* Styles the main page content */
 /********************************/
@@ -111,5 +114,3 @@ body {
 #section-footer ul li{
 	list-style: none;
 }
-
-/* Horizontally stacks the footer Navigation and footer Social Networking menus */
