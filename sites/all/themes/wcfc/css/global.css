@@ -35,20 +35,20 @@ body {
 }
 
 
-#block-user {
+.block-user {
 	margin: 0;
 	position: absolute;
 	right: 0;
 	z-index: 15;
 }	
 
-#block-user .block-inner {
-  color: #FFF;
-  padding: 0;
+.block-user .block-inner {
+	color: #FFF;
+	padding: 0;
 }
 
-#block-user .content {
-  padding: 3px 7px;
+.block-user .content {
+	padding: 3px 7px;
 }
 
 #toboggan-container .toboggan-container {
