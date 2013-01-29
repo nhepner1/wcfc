@@ -70,7 +70,7 @@ body {
 
 #section-footer {
 	background-color: red;
-	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
+	background-image: -webkit-linear-gradient(bottom, #770C1C, #C2142E);
 }
 
 
