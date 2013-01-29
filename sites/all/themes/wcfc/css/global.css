@@ -11,6 +11,13 @@ body {
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 }
 
+/*****************************/
+/* Style the header elements */
+/*****************************/
+.branding-data {
+  float: left;
+}
+
 /***************************/
 /* Primary navigation menu */
 /***************************/
