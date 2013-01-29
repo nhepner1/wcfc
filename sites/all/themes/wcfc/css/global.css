@@ -90,19 +90,15 @@ body {
 }
 
 /* Horizontally stacks the footer Navigation and footer Social Networking menus */
-#region-footer-first {
-	float: left;
+#region-footer-first  {
 	text-align: center;
 }
 #region-footer-second {
 	margin-top: 5em;
-	float: left;
 }
 #region-footer-third {
 	margin-top: 5em;
-	float: left;
 }
 #region-footer-fourth {
 	margin-top: 5em;
-	float: left;
 } 
