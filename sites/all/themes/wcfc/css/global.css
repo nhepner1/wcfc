@@ -46,6 +46,13 @@ body {
 	padding: 0;
 }
 
+/*****************************/
+/* Style the header elements */
+/*****************************/
+.branding-data {
+  float: left;
+}
+
 /***************************/
 /* Primary navigation menu */
 /***************************/
