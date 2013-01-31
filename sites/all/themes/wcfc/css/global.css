@@ -46,6 +46,47 @@ body {
 	padding: 0;
 }
 
+/***************************/
+/* Primary navigation menu */
+/***************************/
+.primary-nav {
+position: absolute;
+bottom: 0;
+right: 0;
+}
+
+.primary-nav ul.menu li.leaf {
+list-style-image: none;
+list-style-type: none;
+float: right;
+}
+
+.primary-nav ul.menu li.leaf a {
+text-decoration: none;
+color: #FFFFFF;
+font-size: 1.3em;
+padding: 5px 0 0 30px;
+display: block; /* The <a> tag won't register the padding without this. This forces it to render the whole element */
+}
+
+/* The active class is assigned by drupal to the link to the current page. 
+This is a navigation convention that helps you keep track of where you are in a site. */
+.primary-nav ul.menu li.leaf a.active {
+color: #002D62;
+}
+/* This is a css "behavior" and is denoted with a colon.
+Whenever the item is hovered over with the mouse, it will adopt the properties listed in this declaration. */
+.primary-nav ul.menu li.leaf a:hover {
+color: #3F6188;
+}
+
+/********************************/
+/* Styles the main page content */
+/********************************/
+#zone-content {
+  background-color: #FFFFFF;
+}
+
 .block-user .content {
 	padding: 3px 7px;
 }
@@ -88,7 +129,6 @@ body {
 	list-style: none;
 }
 
-/* Horizontally stacks the footer Navigation and footer Social Networking menus */
 #region-footer-first  {
 	text-align: center;
 }
