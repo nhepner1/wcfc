@@ -69,7 +69,6 @@ body {
 
 /* Styles the footer menus */
 #section-footer {
-/*	display: inline-block;*/
 	background-color: red;
 	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 	font-family: tahoma;
@@ -101,4 +100,24 @@ body {
 }
 #region-footer-fourth {
 	margin-top: 5em;
-} 
+}
+ 
+/********************************/
+/* Styles the main page content */
+/********************************/
+#zone-content {
+  background-color: #FFFFFF;
+  border-left: 6px solid #e21836;
+  border-right: 6px solid #e21836;
+}
+
+.flexslider {
+  border: none;
+  margin-bottom: 0;
+}
+
+.block-views-frontpage-media-slideshow-block {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
