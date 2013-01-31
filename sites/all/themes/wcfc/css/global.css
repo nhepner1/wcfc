@@ -111,13 +111,13 @@ color: #3F6188;
 /* Styles the footer menus */
 #section-footer {
 	background-color: red;
-	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
 	font-family: tahoma;
 	font-size: 0.9em;
 	margin-bottom: 3em;
 	color: #FFFFFF;
 	padding-top: 1em;
 	padding-bottom: 6em;
+	background-image: -webkit-linear-gradient(bottom, #770C1C, #C2142E);
 }
 
 #section-footer a:link, #section-footer a:hover, #section-footer a:visited, #section-footer a:active {
