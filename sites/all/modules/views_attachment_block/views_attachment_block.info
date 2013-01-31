@@ -1,0 +1,5 @@
+name = Views Attachment Block
+description = "Allows views attachments to be shown in blocks on a page"
+package = Views
+core = 7.x
+files[] = views_attachment_block_plugin_display_block_attachment.inc

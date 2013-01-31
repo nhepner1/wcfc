@@ -1,0 +1,120 @@
+From 7d9f1725f658aa80c76645757ef86569f3064bb7 Mon Sep 17 00:00:00 2001
+From: vasi <vasi@342104.no-reply.drupal.org>
+Date: Fri, 23 Sep 2011 18:22:47 +0100
+Subject: [PATCH] Port to D7
+
+---
+ views_attachment_block.info                        |   11 +------
+ views_attachment_block.module                      |    2 -
+ views_attachment_block.views.inc                   |    2 -
+ ...hment_block_plugin_display_block_attachment.inc |   30 ++++++++-----------
+ 4 files changed, 15 insertions(+), 30 deletions(-)
+
+diff --git a/views_attachment_block.info b/views_attachment_block.info
+index f8cf9d9..a9af6e1 100644
+--- a/views_attachment_block.info
++++ b/views_attachment_block.info
+@@ -1,12 +1,5 @@
+-; $Id: views_attachment_block.info,v 1.2 2010/05/17 12:29:49 darthsteven Exp $
+ name = Views Attachment Block
+ description = "Allows views attachments to be shown in blocks on a page"
+ package = Views
+-core = 6.x
+-
+-; Information added by drupal.org packaging script on 2010-05-18
+-version = "6.x-1.2"
+-core = "6.x"
+-project = "views_attachment_block"
+-datestamp = "1274185511"
+-
++core = 7.x
++files[] = views_attachment_block_plugin_display_block_attachment.inc
+\ No newline at end of file
+diff --git a/views_attachment_block.module b/views_attachment_block.module
+index 58226c6..4d3199a 100644
+--- a/views_attachment_block.module
++++ b/views_attachment_block.module
+@@ -1,7 +1,5 @@
+ <?php
+ 
+-// $Id: views_attachment_block.module,v 1.2 2010/05/17 12:29:49 darthsteven Exp $
+-
+ /**
+  * Implementation of hook_views_api().
+  */
+diff --git a/views_attachment_block.views.inc b/views_attachment_block.views.inc
+index c0f985f..a50fd72 100644
+--- a/views_attachment_block.views.inc
++++ b/views_attachment_block.views.inc
+@@ -1,7 +1,5 @@
+ <?php
+ 
+-// $Id: views_attachment_block.views.inc,v 1.2 2010/05/17 12:29:49 darthsteven Exp $
+-
+ /**
+  * Implementation of hook_views_plugins().
+  */
+diff --git a/views_attachment_block_plugin_display_block_attachment.inc b/views_attachment_block_plugin_display_block_attachment.inc
+index 377f024..7b72243 100644
+--- a/views_attachment_block_plugin_display_block_attachment.inc
++++ b/views_attachment_block_plugin_display_block_attachment.inc
+@@ -1,7 +1,5 @@
+ <?php
+ 
+-// $Id: views_attachment_block_plugin_display_block_attachment.inc,v 1.3 2010/05/18 11:06:49 darthsteven Exp $
+-
+ 
+ /**
+  * @file
+@@ -99,21 +97,19 @@ class views_attachment_block_plugin_display_block_attachment extends views_plugi
+    * but extended block handlers might be able to do interesting
+    * stuff with it.
+    */
+-  function execute_hook_block($op = 'list', $delta = 0, $edit = array()) {
+-    if ($op == 'list') {
+-      $delta = $this->view->name . '-' . $this->display->id;
+-      $desc = $this->get_option('block_description');
++  function execute_hook_block_list($delta = 0, $edit = array()) {
++    $delta = $this->view->name . '-' . $this->display->id;
++    $desc = $this->get_option('block_description');
+ 
+-      if (empty($desc)) {
+-        $desc = t('@view: @display', array('@view' => $this->view->name, '@display' => $this->display->display_title));
+-      }
+-      return array(
+-        $delta => array(
+-          'info' => $desc,
+-          'cache' => BLOCK_NO_CACHE,
+-        )
+-      );
++    if (empty($desc)) {
++      $desc = t('@view: @display', array('@view' => $this->view->name, '@display' => $this->display->display_title));
+     }
++    return array(
++      $delta => array(
++        'info' => $desc,
++        'cache' => BLOCK_NO_CACHE,
++      )
++    );
+   }
+ 
+   /**
+@@ -129,7 +125,7 @@ class views_attachment_block_plugin_display_block_attachment extends views_plugi
+     else {
+       $view = views_get_page_view();
+       if (is_object($view)) {
+-        $content = $view->view->build_info['blocks_attached'][$this->display->id];
++        $content = $view->build_info['blocks_attached'][$this->display->id];
+         // This is a hook_block implementation calling:
+         // Prior to this being called, the $view should already be set to this
+         // display, and arguments should be set on the view.
+@@ -210,4 +206,4 @@ class views_attachment_block_plugin_display_block_attachment extends views_plugi
+     // fall-through returns NULL
+   }
+ 
+-}
++}
+\ No newline at end of file
+-- 
+1.7.1
+
