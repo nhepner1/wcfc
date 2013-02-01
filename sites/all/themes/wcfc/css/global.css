@@ -31,7 +31,7 @@ body {
 
 #zone-branding-wrapper {
 	background-color: red;
-	background-image: -webkit-linear-gradient(top, #770C1C, #C2142E);
+	background-image: -webkit-linear-gradient(top, #770C1C, #E21836);
 }
 
 .block-user {
@@ -124,7 +124,7 @@ color: #3F6188;
 	color: #FFFFFF;
 	padding-top: 1em;
 	padding-bottom: 6em;
-	background-image: -webkit-linear-gradient(bottom, #770C1C, #C2142E);
+	background-image: -webkit-linear-gradient(bottom, #770C1C, #E21836);
 }
 
 #section-footer a:link, #section-footer a:hover, #section-footer a:visited, #section-footer a:active {
