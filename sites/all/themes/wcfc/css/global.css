@@ -152,7 +152,8 @@ color: #3F6188;
 /********************************/
 /* Styles the main page content */
 /********************************/
-#zone-content {
+#zone-content,
+#zone-postscript {
   background-color: #FFFFFF;
   border-left: 6px solid #e21836;
   border-right: 6px solid #e21836;
@@ -163,7 +164,7 @@ color: #3F6188;
   margin-bottom: 0;
 }
 
-.block-views-frontpage-media-slideshow-block {
+.view-frontpage-media-slideshow .flexslider {
   margin-left: -10px;
   margin-right: -10px;
 }
