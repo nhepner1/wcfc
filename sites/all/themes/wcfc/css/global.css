@@ -169,3 +169,29 @@ color: #3F6188;
   margin-right: -10px;
 }
 
+/****************************************/
+/* Styles the secondary navigation menu */
+/****************************************/
+.menu-block-2 {
+	padding: 10px;
+}
+
+.menu-block-2 a:link, a:visited {
+	text-decoration: none;
+	font-size: 1.5em;
+	color: #0062A0;
+}
+
+.menu-block-2 a:hover {
+	color: #3F6188;
+}
+
+.menu-block-2 a.active {
+	color: #002D62;
+}
+
+.menu-block-2 ul li.leaf {
+	list-style-type: none;
+	list-style-image: none;
+	border-bottom: 1px solid #CCCCCC;
+}
