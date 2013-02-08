@@ -6,6 +6,26 @@ body {
 	background-image: -webkit-linear-gradient(top, #002D62, #3F6188);
 }
 
+/**********************/
+/* Breadcrumb styling */
+/**********************/
+.breadcrumb {
+	margin-top: 60px;
+	font-size: .8em;
+}
+
+.breadcrumb a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+.breadcrumb a:hover {
+	color: #3F6188;
+}
+
+.breadcrumb a:active {
+	color: #002D62;
+}
 
 #zone-user-wrapper {
   height: 25px;
