@@ -169,3 +169,81 @@ color: #3F6188;
   margin-right: -10px;
 }
 
+/********************************/
+/* Styles the Galleries section */
+/********************************/
+#page-title {
+	font-family: 		verdana;
+	width:				100%;
+	border-bottom:		2px solid #3F6188;
+}
+
+
+.media-gallery-collection {
+	margin:				0 auto;
+}
+
+.mg-gallery {
+	height:				400px;
+}
+
+.submitted {
+	background-color:	#002D62;
+	text-align:			center;
+	color:				#FFFFFF;
+	border:				1px solid #000000;
+}
+
+.submitted a {
+	text-decoration:	none;
+	color:				#FFFFFF;
+	font-weight:		bold;
+}
+
+.submitted a:hover {
+	color:				#3F6188;
+}
+
+.file-icon {
+	margin-bottom:		30px;
+}
+
+.media-gallery-item  a {
+	text-decoration: 	none;
+	color:				#000000;
+	font-weight:		bold;
+}
+
+.media-gallery-item a:hover {
+	color: 				#3F6188;
+}
+
+.stack-image {
+	background-color: 	#e21836;
+}
+
+/* Styles the Comments */
+.comment-form {
+	font-family:		verdana;
+	color:				#FFFFFF;
+}
+
+#comments {
+	padding: 			10px;
+	margin-bottom:		10px;
+	background-color: 	#002D62;
+	font-family:		verdana;
+	border-radius:		10px;
+	border:				1px solid #000000;
+}
+
+#comments a {
+	text-decoration: 	none;
+	color:				#3F6188;
+	font-weight:		bold;
+	height:				100%;
+}
+
+#comments a:hover {
+	color: 				#FFFFFF;
+}
