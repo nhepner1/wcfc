@@ -178,21 +178,30 @@ color: #3F6188;
 	border-bottom:		2px solid #3F6188;
 }
 
+
 .media-gallery-collection {
-	margin-left:		0;
+	margin:				0 auto;
 }
 
 .mg-gallery {
-	background-color:	#3F6188;
 	height:				400px;
 }
 
 .submitted {
-	background-color:	#3F6188;
+	background-color:	#002D62;
 	text-align:			center;
 	color:				#FFFFFF;
-	border-top:			1px solid #002D62;
-	border-bottom:		1px solid #002D62;
+	border:				1px solid #000000;
+}
+
+.submitted a {
+	text-decoration:	none;
+	color:				#FFFFFF;
+	font-weight:		bold;
+}
+
+.submitted a:hover {
+	color:				#3F6188;
 }
 
 .file-icon {
@@ -201,15 +210,40 @@ color: #3F6188;
 
 .media-gallery-item  a {
 	text-decoration: 	none;
-	color:				#FFFFFF;
+	color:				#000000;
 	font-weight:		bold;
-	height:				100%;
 }
 
-.primary-nav ul.menu li.leaf a:hover {
+.media-gallery-item a:hover {
 	color: 				#3F6188;
 }
 
 .stack-image {
 	background-color: 	#e21836;
+}
+
+/* Styles the Comments */
+.comment-form {
+	font-family:		verdana;
+	color:				#FFFFFF;
+}
+
+#comments {
+	padding: 			10px;
+	margin-bottom:		10px;
+	background-color: 	#002D62;
+	font-family:		verdana;
+	border-radius:		10px;
+	border:				1px solid #000000;
+}
+
+#comments a {
+	text-decoration: 	none;
+	color:				#3F6188;
+	font-weight:		bold;
+	height:				100%;
+}
+
+#comments a:hover {
+	color: 				#FFFFFF;
 }
