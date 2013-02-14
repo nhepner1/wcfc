@@ -85,7 +85,7 @@ right: 0;
 .primary-nav ul.menu li.leaf {
 list-style-image: none;
 list-style-type: none;
-float: right;
+float: left;
 }
 
 .primary-nav ul.menu li.leaf a {
