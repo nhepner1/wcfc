@@ -2,8 +2,18 @@
 /* This also can include ANY global CSS that applies site-wide. Unless overwritten by a more specific style rule, CSS declarations in global.css will apply site-wide. */
 
 body {
-	background-color: blue;
-	background-image: -webkit-linear-gradient(top, #002D62, #3F6188);
+	background-color: #002D62;
+	background-image: -webkit-linear-gradient(top, #002D62, #3F6188 700px);
+}
+
+ul {
+  margin-left: 20px;
+}
+
+.fc-header-title h2, 
+#page-title {
+  font-family: Tahoma, Geneva, sans-serif;
+  color: #002D62;
 }
 
 /**********************/
@@ -16,14 +26,14 @@ body {
 
 .breadcrumb a {
 	text-decoration: none;
-	color: #FFFFFF;
+	color: #666666;
 }
 
 .breadcrumb a:hover {
 	color: #3F6188;
 }
 
-.breadcrumb a:active {
+.breadcrumb a.active {
 	color: #002D62;
 }
 
@@ -50,7 +60,7 @@ body {
 }
 
 #zone-branding-wrapper {
-	background-color: red;
+	background-color: #E21836;
 	background-image: -webkit-linear-gradient(top, #770C1C, #E21836);
 }
 
@@ -147,9 +157,17 @@ color: #3F6188;
 	background-image: -webkit-linear-gradient(bottom, #770C1C, #E21836);
 }
 
-#section-footer a:link, #section-footer a:hover, #section-footer a:visited, #section-footer a:active {
+#section-footer a, #section-footer a:visited {
 	text-decoration: none;
 	color: #FFFFFF;
+}
+
+#section-footer a:hover {
+  color: #3F6188
+}
+
+#section-footer a.active {
+  color: #002D62;
 }
 
 #section-footer ul li{
@@ -179,6 +197,10 @@ color: #3F6188;
   border-right: 6px solid #e21836;
 }
 
+#zone-postscript {
+  padding-bottom: 15px;
+}
+
 .flexslider {
   border: none;
   margin-bottom: 0;
@@ -192,26 +214,94 @@ color: #3F6188;
 /****************************************/
 /* Styles the secondary navigation menu */
 /****************************************/
-.menu-block-2 {
-	padding: 10px;
+
+.secondary-nav a {
+  font-size: 1.3em;
+  color: #0062A0;
+  text-decoration: none;
+  display: block;
+  padding: 3px 0;
 }
 
-.menu-block-2 a:link, a:visited {
-	text-decoration: none;
-	font-size: 1.5em;
-	color: #0062A0;
+.secondary-nav a.active {
+  color: #002D62;
 }
 
-.menu-block-2 a:hover {
-	color: #3F6188;
+.secondary-nav a:hover {
+  color: #E21836;
 }
 
-.menu-block-2 a.active {
-	color: #002D62;
+.secondary-nav ul li.leaf {
+  list-style-type: none;
+  list-style-image: none;
+  border-bottom: 1px solid #CCCCCC;
 }
 
-.menu-block-2 ul li.leaf {
-	list-style-type: none;
-	list-style-image: none;
-	border-bottom: 1px solid #CCCCCC;
+.secondary-nav ul li.leaf.last {
+  border-bottom: none;
+}
+
+/**
+ * Search Box 
+ */
+
+#block-search-form {
+  float: right;
+  margin-top: 20px;
+}
+
+#edit-search-block-form--2 {
+  border: 1px solid #FFFFFF;
+  height: 32px;
+  background: -webkit-linear-gradient(top, #aaaaaa, #ffffff 50%);
+  font-size: 1.2em;
+  color: #888888;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  border-radius: 10px;
+}
+
+#edit-submit {
+  background-color: transparent;
+}
+
+/**
+ *   Headers and titles
+ */
+h2.block-title {
+  font-family: Tahoma, Geneva, sans-serif;
+  color: #002D62;
+}
+
+/**
+ *   Views and lists
+ */
+
+.views-field-title,
+.views-field-title a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.views-field-field-event-time {
+  font-size: .7em;
+  font-weight: bold;
+  color: #666666;
+}
+.date-display-single {
+  color: #E21836;
+  font-size: 1.3em;
+}
+
+.views-row {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.views-row.views-row-last {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.fc-header-title {
+  font-family: 
 }
