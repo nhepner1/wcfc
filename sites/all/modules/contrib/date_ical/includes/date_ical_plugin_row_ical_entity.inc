@@ -192,15 +192,17 @@ class date_ical_plugin_row_ical_entity extends views_plugin_row {
     $start->setTimezone(new dateTimezone($date_field['timezone']));
     $end->setTimezone(new dateTimezone($date_field['timezone']));
     
-    $start_formatted = $start->format(DATE_FORMAT_DATETIME);
-    $end_formatted = $end->format(DATE_FORMAT_DATETIME);
+    // Check if the start and end dates indicate that this is an All Day event.
+    $all_day = date_is_all_day(
+      date_format($start, DATE_FORMAT_DATETIME),
+      date_format($end, DATE_FORMAT_DATETIME),
+      date_granularity_precision($date_info['granularity'])
+    );
     
-    $all_day = date_is_all_day($start_formatted, $end_formatted, date_granularity_precision($date_info['granularity']));
-    
-    // According to RFC 2445 (clarified in RFC 5545) the DTEND value is
-    // non-inclusive. When it is a DATE rather than a DATETIME, this means
-    // that we should add one day to its value.
     if ($all_day) {
+      // According to RFC 2445 (clarified in RFC 5545) the DTEND value is
+      // non-inclusive. When dealing with All Day values, they're DATEs rather
+      // than DATETIMEs, so we need to add a day to conform to RFC.
       $end->modify("+1 day");
     }
     

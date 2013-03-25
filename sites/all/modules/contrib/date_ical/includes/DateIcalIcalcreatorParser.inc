@@ -83,7 +83,7 @@ class DateIcalIcalcreatorParser extends DateIcalFeedsParser {
     $filename = $fetcher_result->getFilePath();
 
     //
-    // Create the calendar object and parser the file.
+    // Create the calendar object and parse the file.
     //
     $config = array(
       'unique_id' => '', // do we need one for incoming parsing?
@@ -227,12 +227,13 @@ class DateIcalIcalcreatorParser extends DateIcalFeedsParser {
           $start_array['tz'] =  $start_prop['params']['TZID'];
         }
         
-        if ($start_array['year'] == $date_array['year'] && $start_array['month'] == $date_array['month'] && $start_array['day'] == $date_array['day'] - 1) {
-          // Single day, all day event.
-          // iCal DATE has start on day, end on next day.
-          // Presently handled date.module by having same start and end dates.
-          // See notes about timezone handling in issue above however.
-          $date_array = $start_array;
+        if ($start_array['year']       == $date_array['year']
+            && $start_array['month']   == $date_array['month']
+            && $start_array['day'] + 1 == $date_array['day']
+            && module_exists('date_all_day')) {
+          // On single-day All Day events (the start date + 1 = the end date), just ignore the DTEND
+          // if the Date All Day module is installed. Otherwise it'll be displayed strangely.
+          return;
         }
       }
       // The order in which the source -> target mapping is set up matters here: dtstart has to come before dtend.
@@ -251,7 +252,12 @@ class DateIcalIcalcreatorParser extends DateIcalFeedsParser {
         }
       }
       
-      $parsed_datetime = new FeedsDateTime(sprintf('%d-%d-%d', $date_array['year'], $date_array['month'], $date_array['day']));
+      // FeedsDateTime's implementation of setTimezone() assumes that dates with no time element should just ignore
+      // timezone changes, so I had to add the 00:00:00 explicitly, even though it shouldn't be necessary.
+      $date_string = sprintf('%d-%d-%d 00:00:00', $date_array['year'], $date_array['month'], $date_array['day']);
+      // Set the timezone for All Day events to the server's timezone, rather than letting them default to UTC,
+      // so that they don't get improperly offset when saved to the DB.
+      $parsed_datetime = new FeedsDateTime($date_string, new DateTimeZone(date_default_timezone_get()));
     }
     else {
       // Date with time.
