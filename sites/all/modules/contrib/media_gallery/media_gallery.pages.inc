@@ -339,7 +339,7 @@ function media_gallery_remove_item_form($form, &$form_state, $node, $file) {
   return confirm_form($form,
     t('Are you sure you want to remove %file from the gallery %gallery?', array('%file' => $file->filename, '%gallery' => $node->title)),
     "media-gallery/detail/{$node->nid}/{$file->fid}",
-    t('The file will still be available in the media library to use elsewhere on this site.'),
+    t('The file will still be available in the media library if used elsewhere on this site. Note: Unused files will be deleted.'),
     t('Remove file')
   );
 }
@@ -410,7 +410,7 @@ function media_gallery_media_page_multiedit($node) {
   module_load_include('inc', 'media', 'includes/media.pages');
 
   // Build and process the form.
-  $form = media_file_page_edit_multiple($files);
+  $form = media_bulk_upload_file_operation_edit_multiple($files);
 
   // Override the page title set by media_file_page_edit_multiple() and return the form.
   drupal_set_title(t('<em>Edit media for</em> @title', array('@type' => $node->type, '@title' => $node->title)), PASS_THROUGH);

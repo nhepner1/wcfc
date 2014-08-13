@@ -1303,3 +1303,60 @@ function media_gallery_update_7010() {
   }
   field_bundle_settings('file', $bundle, $bundle_settings);
 }
+
+/**
+ * Converts old media_gallery_media field to media_gallery_file.
+ */
+function media_gallery_update_7012() {
+  // Create fields (but not instances yet) for media_gallery nodes and
+  // for the gallery collection vocabulary.
+  foreach (_media_gallery_controlled_fields() as $field) {
+    _media_gallery_ensure_field($field);
+  }
+
+  // Attach fields to the media gallery node type (including a term reference
+  // for the default collection).
+  foreach (_media_gallery_controlled_instances('node') as $instance) {
+    _media_gallery_ensure_instance($instance);
+  }
+
+  // Make sure all media bundles have the instances we expect.
+  _media_gallery_ensure_media_instances();
+
+  // Move content from media_gallery_media to media_gallery_file.
+  $result = db_query("SELECT nid FROM {node} WHERE type = 'media_gallery'");
+  foreach ($result as $record) {
+    $node = node_load($record->nid);
+    $change = FALSE;
+    // Check all languages.
+    foreach ($node->media_gallery_media as $langcode => $media) {
+      // Only update if the media_gallery_file field is not in use, but
+      // media_gallery_media is in use.
+      if (empty($node->media_gallery_file[$langcode]) && !empty($node->media_gallery_media[$langcode])) {
+        foreach ($media as $file) {
+          // Copy the file contents over.
+          $node->media_gallery_file[$langcode][] = array(
+            'fid' => $file['fid'],
+            'description' => $file['title'],
+            'display' => 1,
+          );
+          $change = TRUE;
+        }
+      }
+    }
+
+    if ($change) {
+      // A change has occur, so we need to save the node.
+      node_save($node);
+    }
+  }
+
+  $instance = array(
+    'field_name' => 'media_gallery_media',
+    'entity_type' => 'node',
+    'bundle' => 'media_gallery',
+  );
+  // Remove the old media_gallery_media field.
+  field_delete_instance($instance, TRUE);
+  field_delete_field($instance['field_name']);
+}

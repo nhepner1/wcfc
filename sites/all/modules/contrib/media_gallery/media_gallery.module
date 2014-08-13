@@ -74,7 +74,7 @@ function media_gallery_menu() {
   );
   // An in-gallery-context version of media/%file/edit.
   $items['media-gallery/detail/%media_gallery_mg_node/%media_gallery_mg_item/edit'] = array(
-    'title' => 'Edit',
+    'title' => 'Edit file info',
     'page callback' => 'media_gallery_media_page_edit',
     'page arguments'  => array(2, 3),
     'access callback' => 'media_gallery_edit_item_access',
@@ -86,7 +86,7 @@ function media_gallery_menu() {
     'file' => 'media_gallery.pages.inc',
   );
   $items['media-gallery/detail/%media_gallery_mg_node/%media_gallery_mg_item/remove'] = array(
-    'title' => 'Remove',
+    'title' => 'Remove from gallery',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('media_gallery_remove_item_form', 2, 3),
     'access callback' => 'media_gallery_remove_item_access',
@@ -1271,6 +1271,17 @@ function media_gallery_contextual_links_view_alter(&$element, $items) {
       }
     }
   }
+  // Remove 'Edit' button provided by File Entity.
+  if (isset($element['#links']['media-gallery-edit']) && isset($element['#links']['file-edit'])) {
+    unset($element['#links']['file-edit']);
+  }
+  // Move 'Delete' button to the bottom of the list and modify label.
+  if (isset($element['#links']['media-gallery-edit']) && isset($element['#links']['file-delete'])) {
+    $delete = $element['#links']['file-delete'];
+    unset($element['#links']['file-delete']);
+    $element['#links']['file-delete'] = $delete;
+    $element['#links']['file-delete']['title'] = 'Delete file';
+  }
 }
 
 /**
@@ -1498,7 +1509,7 @@ function media_gallery_multiedit_access($node) {
   if ($media_items === FALSE)
     return;
 
-  $media_items = media_gallery_filter_media_access($media_items, 'edit');
+  $media_items = media_gallery_filter_media_access($media_items, 'update');
   if (count($media_items) > 0) {
     return TRUE;
   }
@@ -1535,7 +1546,7 @@ function media_gallery_view_item_access($node, $file) {
 function media_gallery_edit_item_access($node, $file) {
   // Only grant access if the user can edit the provided media
   // and the media is part of the gallery.
-  return file_entity_access('edit', $file)
+  return file_entity_access('update', $file)
     && in_array($file->fid, media_gallery_get_file_ids($node));
 }
 
@@ -1866,7 +1877,7 @@ function media_gallery_lightbox_delivery_callback($page_content) {
  * @param $media_files
  *   The files to perform the access check.
  * @param $operation
- *   A access operation (for example: 'view', 'edit',...).
+ *   A access operation (for example: 'view', 'update', 'delete', 'create').
  *
  * @return
  *   An array of files.
