@@ -51,12 +51,31 @@ ul {
 }
 
 .logo-img {
-  margin-bottom: -50px;
   margin-top: -25px;
   margin-left: 30px;
   float: left;
   position: relative;
   z-index: 10;
+}
+
+.responsive-layout-narrow .logo-img,
+.responsive-layout-normal .logo-img {
+    margin-left: 0;
+}
+
+.logo-img a {
+    height: 273px;
+    width: 350px;
+    display: block;
+    background-image: url('../images/wcfc-logo350px.png');
+}
+
+.responsive-layout-mobile .logo-img a,
+.responsive-layout-narrow .logo-img a,
+.responsive-layout-normal .logo-img a {
+    width: 280px;
+    height: 218px;
+    background-image: url('../images/wcfc-logo280px.png');
 }
 
 #zone-branding-wrapper {
@@ -83,6 +102,10 @@ ul {
   float: left;
 }
 
+.responsive-layout-narrow .branding-data {
+    float: none;
+}
+
 /***************************/
 /* Primary navigation menu */
 /***************************/
@@ -90,6 +113,10 @@ ul {
 position: absolute;
 bottom: 0;
 right: 0;
+}
+
+.responsive-layout-narrow .primary-nav {
+    position: static;
 }
 
 .primary-nav ul.menu li.leaf {
@@ -104,6 +131,11 @@ color: #FFFFFF;
 font-size: 1.3em;
 padding: 5px 0 0 30px;
 display: block; /* The <a> tag won't register the padding without this. This forces it to render the whole element */
+}
+
+.responsive-layout-narrow .primary-nav ul.menu li.leaf a,
+.responsive-layout-normal .primary-nav ul.menu li.leaf a {
+    padding: 5px 0 0 15px;
 }
 
 /* The active class is assigned by drupal to the link to the current page. 
@@ -248,6 +280,12 @@ color: #3F6188;
 #block-search-form {
   float: right;
   margin-top: 20px;
+}
+
+.responsive-layout-narrow #block-search-form {
+    position: absolute;
+    right: 0;
+    top: 20px;
 }
 
 #edit-search-block-form--2 {
