@@ -79,7 +79,7 @@ ul {
 }
 
 #zone-branding-wrapper {
-	background-color: #E21836;
+/*background-color: #E21836;*/
 	background-image: -webkit-linear-gradient(top, #770C1C, #E21836);
 }
 
@@ -179,7 +179,7 @@ color: #3F6188;
 
 /* Styles the footer menus */
 #section-footer {
-	background-color: red;
+	/*background-color: red; */
 	font-family: tahoma;
 	font-size: 0.9em;
 	margin-bottom: 3em;
@@ -224,7 +224,8 @@ color: #3F6188;
 /********************************/
 #zone-content,
 #zone-postscript {
-  background-color: #FFFFFF;
+  background-color: #FFFFFF; 
+  /*background-color: #e21836; */
   border-left: 6px solid #e21836;
   border-right: 6px solid #e21836;
 }
