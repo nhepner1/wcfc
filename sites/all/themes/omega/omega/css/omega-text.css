@@ -47,7 +47,8 @@ h2.site-name {
 
 /* Make it a bit smaller for block headers */
 h2.block-title {
-  font-size: 18px;
+  font-size: 22px;
+  /*font-size: 18px;*/
   margin: 0;	
 }
 
