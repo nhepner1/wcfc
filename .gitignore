@@ -4,3 +4,11 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
+
+# Ignore any files added by editors or operating systems.
+.DS_Store
+.project
+.buildpath
+.settings
+.idea
+
